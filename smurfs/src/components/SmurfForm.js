@@ -1,31 +1,27 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { addSmurf } from "../state/actionCreator";
+import { addSmurf, inputChange, updateSmurf } from "../state/actionCreator";
 
 const SmurfForm = props => {
-  const [formvalues, setFormValues] = useState({
-    name: "",
-    age: "",
-    height: ""
-  });
+  const formvalues = props.formValues;
 
   const inputChange = e => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formvalues,
-      [name]: value
-    });
+    props.inputChange({ name, value });
   };
 
   const handleAddSmurf = e => {
     e.preventDefault();
-
-    const newSmurf = {
-      name: formvalues.name,
-      height: formvalues.height,
-      age: parseInt(formvalues.age, 10)
-    };
-    props.addSmurf(newSmurf);
+    if (formvalues.id !== null) {
+      props.updateSmurf(formvalues);
+    } else {
+      const newSmurf = {
+        name: formvalues.name,
+        height: formvalues.height,
+        age: parseInt(formvalues.age, 10)
+      };
+      props.addSmurf(newSmurf);
+    }
   };
 
   return (
@@ -62,6 +58,10 @@ const SmurfForm = props => {
 };
 
 export default connect(
-  state => ({ state: state }),
-  dispatch => ({ addSmurf: smurfs => dispatch(addSmurf(smurfs)) })
+  state => ({ formValues: state.form }),
+  dispatch => ({
+    addSmurf: smurfs => dispatch(addSmurf(smurfs)),
+    inputChange: target => dispatch(inputChange(target)),
+    updateSmurf: updatedSmurf => dispatch(updateSmurf(updatedSmurf))
+  })
 )(SmurfForm);

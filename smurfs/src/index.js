@@ -1,13 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import "./index.css";
 import App from "./components/App";
-import { reducer } from "./state/reducer";
+import { reducer, formReducer } from "./state/reducer";
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const reducers = combineReducers({
+  smurfs: reducer,
+  form: formReducer
+});
+const store = createStore(reducers, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

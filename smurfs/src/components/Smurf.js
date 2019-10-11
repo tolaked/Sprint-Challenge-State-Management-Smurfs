@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchSmurfs } from "../state/actionCreator";
+import { fetchSmurfs, prepopulate } from "../state/actionCreator";
 
 const Smurf = props => {
   useEffect(() => {
     props.fetchSmurfs();
   }, []);
 
-  const mySmurfs = props.state.smurfs;
+  const mySmurfs = props.smurfs;
   console.log("this is", mySmurfs);
 
   return (
@@ -17,6 +17,7 @@ const Smurf = props => {
           {<h5>Name:{char.name}</h5>}
           <p>Age: {char.age}</p>
           <p>Height: {char.height}</p>
+          <button onClick={() => props.prepopulate(char)}>Edit</button>
         </div>
       ))}
     </div>
@@ -24,6 +25,9 @@ const Smurf = props => {
 };
 
 export default connect(
-  state => ({ state: state }),
-  dispatch => ({ fetchSmurfs: () => dispatch(fetchSmurfs()) })
+  state => ({ smurfs: state.smurfs }),
+  dispatch => ({
+    fetchSmurfs: () => dispatch(fetchSmurfs()),
+    prepopulate: values => dispatch(prepopulate(values))
+  })
 )(Smurf);
