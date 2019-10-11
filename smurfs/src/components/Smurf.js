@@ -7,7 +7,7 @@ const Smurf = props => {
     props.fetchSmurfs();
   }, []);
 
-  const mySmurfs = [...props.state.smurfs];
+  const mySmurfs = props.state.smurfs;
   console.log("this is", mySmurfs);
 
   return (

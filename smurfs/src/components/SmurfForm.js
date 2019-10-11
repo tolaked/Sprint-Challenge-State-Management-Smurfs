@@ -2,36 +2,40 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { addSmurf } from "../state/actionCreator";
 
-const SmurfForm = () => {
+const SmurfForm = props => {
   const [formvalues, setFormValues] = useState({
     name: "",
     age: "",
     height: ""
   });
 
-  const inputChange = (field, value) => {
+  const inputChange = e => {
+    const { name, value } = e.target;
     setFormValues({
       ...formvalues,
-      [field]: value
+      [name]: value
     });
   };
 
-  const handleAddSmurf = () => {
+  const handleAddSmurf = e => {
+    e.preventDefault();
+
     const newSmurf = {
       name: formvalues.name,
       height: formvalues.height,
       age: parseInt(formvalues.age, 10)
     };
+    props.addSmurf(newSmurf);
   };
 
   return (
-    <form>
+    <form onSubmit={e => handleAddSmurf(e)}>
       <label htmlFor="name">name</label>
       <input
         value={formvalues.name}
         name="name"
         placeholder="Enter Smurf name..."
-        inputChange={inputChange}
+        onChange={inputChange}
         type="text"
       />
       <br />
@@ -40,7 +44,7 @@ const SmurfForm = () => {
         value={formvalues.age}
         name="age"
         placeholder="Enter Smurf age..."
-        inputChange={inputChange}
+        onChange={inputChange}
         type="text"
       />
       <br />
@@ -49,11 +53,15 @@ const SmurfForm = () => {
         value={formvalues.height}
         name="height"
         placeholder="Enter Smurf height..."
-        inputChange={inputChange}
+        onChange={inputChange}
         type="text"
       />
+      <button>Add</button>
     </form>
   );
 };
 
-export default SmurfForm;
+export default connect(
+  state => ({ state: state }),
+  dispatch => ({ addSmurf: smurfs => dispatch(addSmurf(smurfs)) })
+)(SmurfForm);

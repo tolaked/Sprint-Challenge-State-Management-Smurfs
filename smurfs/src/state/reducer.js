@@ -11,7 +11,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         smurfs: action.payload
       };
-    case ADD_SMURFS:
+    case ADD_SMURF:
       return {
         ...state,
         smurfs: action.payload
