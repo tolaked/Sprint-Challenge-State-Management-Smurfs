@@ -13,7 +13,11 @@ const Smurf = props => {
   return (
     <div>
       {mySmurfs.map(char => (
-        <div>{<h5>{char.name}</h5>}</div>
+        <div>
+          {<h5>Name:{char.name}</h5>}
+          <p>Age: {char.age}</p>
+          <p>Height: {char.height}</p>
+        </div>
       ))}
     </div>
   );
