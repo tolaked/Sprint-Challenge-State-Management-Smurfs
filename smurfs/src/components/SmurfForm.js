@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 import { addSmurf, inputChange, updateSmurf } from "../state/actionCreator";
 
 const SmurfForm = props => {
@@ -25,9 +26,10 @@ const SmurfForm = props => {
   };
 
   return (
-    <form onSubmit={e => handleAddSmurf(e)}>
-      <label htmlFor="name">name</label>
-      <input
+    <StyledForm onSubmit={e => handleAddSmurf(e)}>
+      <StyledLabel htmlFor="name">name</StyledLabel>
+      <br />
+      <StyedInput
         value={formvalues.name}
         name="name"
         placeholder="Enter Smurf name..."
@@ -35,8 +37,9 @@ const SmurfForm = props => {
         type="text"
       />
       <br />
-      <label htmlFor="age">Age</label>
-      <input
+      <StyledLabel htmlFor="age">Age</StyledLabel>
+      <br />
+      <StyedInput
         value={formvalues.age}
         name="age"
         placeholder="Enter Smurf age..."
@@ -44,16 +47,18 @@ const SmurfForm = props => {
         type="text"
       />
       <br />
-      <label htmlFor="height">Height</label>
-      <input
+      <StyledLabel htmlFor="height">Height</StyledLabel>
+      <br />
+      <StyedInput
         value={formvalues.height}
         name="height"
         placeholder="Enter Smurf height..."
         onChange={inputChange}
         type="text"
       />
+      <br />
       <button>Add</button>
-    </form>
+    </StyledForm>
   );
 };
 
@@ -65,3 +70,11 @@ export default connect(
     updateSmurf: updatedSmurf => dispatch(updateSmurf(updatedSmurf))
   })
 )(SmurfForm);
+
+const StyedInput = styled.input`
+  margin-bottom: 10px;
+`;
+
+const StyledLabel = styled.label``;
+
+const StyledForm = styled.form``;

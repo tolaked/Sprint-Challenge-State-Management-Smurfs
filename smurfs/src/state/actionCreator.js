@@ -7,6 +7,7 @@ export const ADD_SMURFS = "ADD_SMURFS";
 export const GET_SMURF = "GET_SMURF";
 export const INPUT_CHANGE = "INPUT_CHANGE";
 export const PREPOPULATE = "PREPOPULATE";
+export const DELETE_SMURF = "DELETESMURF";
 
 export const prepopulate = values => {
   return {
@@ -29,12 +30,16 @@ export const createSmurf = data => {
   };
 };
 
+export const deleteSmurf = data => ({
+  type: DELETE_SMURF,
+  payload: data
+});
+
 export const fetchSmurfs = () => dispatch => {
   axios
     .get("/smurfs")
     .then(res => {
       dispatch({ type: GET_SMURF, payload: res.data });
-      //   console.log(res.data);
     })
     .catch(err => {
       console.log(err);
@@ -60,6 +65,17 @@ export const updateSmurf = ({ id, ...smurf }) => dispatch => {
       dispatch(createSmurf(res.data));
     })
     .catch(err => {
-      console.log("this", err);
+      console.log(err);
+    });
+};
+
+export const removeSmurf = ({ id, ...smurf }) => dispatch => {
+  axios
+    .delete(`smurfs/${id}`, smurf)
+    .then(res => {
+      dispatch(deleteSmurf(res.data));
+    })
+    .catch(err => {
+      console.log(err);
     });
 };

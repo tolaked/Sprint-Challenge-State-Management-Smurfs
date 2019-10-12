@@ -2,7 +2,8 @@ import {
   GET_SMURF,
   ADD_SMURF,
   INPUT_CHANGE,
-  PREPOPULATE
+  PREPOPULATE,
+  DELETE_SMURF
 } from "./actionCreator";
 
 export const reducer = (state = [], action) => {
@@ -10,6 +11,8 @@ export const reducer = (state = [], action) => {
     case GET_SMURF:
     case ADD_SMURF:
       return action.payload;
+    case DELETE_SMURF:
+      return state.filter(char => char.id !== action.payload.id);
     default:
       return state;
   }
