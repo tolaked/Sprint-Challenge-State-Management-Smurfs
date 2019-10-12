@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchSmurfs, prepopulate, deleteSmurf } from "../state/actionCreator";
+import { fetchSmurfs, prepopulate, removeSmurf } from "../state/actionCreator";
 import styled from "styled-components";
 
 const Smurf = props => {
@@ -9,7 +9,6 @@ const Smurf = props => {
   }, []);
 
   const mySmurfs = props.smurfs;
-  console.log("this is", mySmurfs);
 
   return (
     <StyledDiv>
@@ -18,8 +17,8 @@ const Smurf = props => {
           {<h5>Name:{char.name}</h5>}
           <p>Age: {char.age}</p>
           <p>Height: {char.height}</p>
-          <button onClick={() => props.prepopulate(char)}>Edit</button>
-          <button onClick={() => props.deleteSmurf(char)}>Delete</button>
+          <button onClick={id => props.prepopulate(char)}>Edit</button>
+          <button onClick={id => props.removeSmurf(char.id)}>Delete</button>
         </div>
       ))}
     </StyledDiv>
@@ -31,7 +30,7 @@ export default connect(
   dispatch => ({
     fetchSmurfs: () => dispatch(fetchSmurfs()),
     prepopulate: values => dispatch(prepopulate(values)),
-    deleteSmurf: data => dispatch(deleteSmurf(data))
+    removeSmurf: data => dispatch(removeSmurf(data))
   })
 )(Smurf);
 

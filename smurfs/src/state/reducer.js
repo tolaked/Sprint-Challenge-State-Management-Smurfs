@@ -9,10 +9,10 @@ import {
 export const reducer = (state = [], action) => {
   switch (action.type) {
     case GET_SMURF:
+      return action.payload;
     case ADD_SMURF:
       return action.payload;
-    case DELETE_SMURF:
-      return state.filter(char => char.id !== action.payload.id);
+
     default:
       return state;
   }
@@ -37,6 +37,8 @@ export const formReducer = (state = initialForm, action) => {
         ...action.payload
       };
     case ADD_SMURF:
+      return initialForm;
+    case DELETE_SMURF:
       return initialForm;
 
     default:

@@ -30,11 +30,6 @@ export const createSmurf = data => {
   };
 };
 
-export const deleteSmurf = data => ({
-  type: DELETE_SMURF,
-  payload: data
-});
-
 export const fetchSmurfs = () => dispatch => {
   axios
     .get("/smurfs")
@@ -69,11 +64,11 @@ export const updateSmurf = ({ id, ...smurf }) => dispatch => {
     });
 };
 
-export const removeSmurf = ({ id, ...smurf }) => dispatch => {
+export const removeSmurf = id => dispatch => {
   axios
-    .delete(`smurfs/${id}`, smurf)
+    .delete(`smurfs/${id}`)
     .then(res => {
-      dispatch(deleteSmurf(res.data));
+      dispatch({ type: GET_SMURF, payload: res.data });
     })
     .catch(err => {
       console.log(err);
